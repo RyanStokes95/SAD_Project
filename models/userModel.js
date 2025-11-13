@@ -1,15 +1,23 @@
 const db = require('../config/db');
 
-//Exported functions for user operations
-
-exports.createUser = async (username, hashedPassword) => {
-  const sql = 'INSERT INTO users (username, password) VALUES (?, ?)';
-  const [result] = await db.execute(sql, [username, hashedPassword]);
-  return result;
+// Create a new user
+exports.createUser = (username, hashedPassword) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO users (username, password) VALUES (?, ?)';
+    db.run(sql, [username, hashedPassword], function (err) {
+      if (err) return reject(err);
+      resolve({ id: this.lastID });
+    });
+  });
 };
 
-exports.findUserByUsername = async (username) => {
-  const sql = 'SELECT * FROM users WHERE username = ?';
-  const [rows] = await db.execute(sql, [username]);
-  return rows[0];
+// Find a user by username
+exports.findUserByUsername = (username) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM users WHERE username = ?';
+    db.get(sql, [username], (err, row) => {
+      if (err) return reject(err);
+      resolve(row);
+    });
+  });
 };
