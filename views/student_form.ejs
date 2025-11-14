@@ -1,0 +1,12 @@
+<h2><%= student.id ? 'Edit' : 'Add' %> Student</h2>
+<form method="POST" action="<%= student.id ? ('/students/edit/' + student.id) : '/students/add' %>" class="card p-4">
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input name="name" class="form-control" value="<%= student.name || '' %>" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Course</label>
+    <input name="course" class="form-control" value="<%= student.course || '' %>">
+  </div>
+  <button class="btn btn-primary"><%= student.id ? 'Update' : 'Create' %></button>
+</form>

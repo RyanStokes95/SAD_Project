@@ -1,0 +1,23 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Students</h2>
+  <a href="/students/add" class="btn btn-success">Add Student</a>
+</div>
+
+<table class="table table-striped">
+  <thead><tr><th>ID</th><th>Name</th><th>Course</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% students.forEach(s => { %>
+      <tr>
+        <td><%= s.id %></td>
+        <td><%= s.name %></td>
+        <td><%= s.course || '' %></td>
+        <td>
+          <a href="/students/edit/<%= s.id %>" class="btn btn-sm btn-warning">Edit</a>
+          <form action="/students/delete/<%= s.id %>" method="POST" style="display:inline">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
