@@ -6,7 +6,6 @@ const escapeHtml = require('escape-html');
 exports.list = async (req, res) => {
   try {
     const students = await Student.getAll();
-    // escape when rendering in view; pass raw data
     res.render('students', { title: 'Students', students });
   } catch (err) {
     logger.error('Get students failed', { error: err.message });
