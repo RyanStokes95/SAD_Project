@@ -14,11 +14,14 @@ app.use(expressLayouts);
 app.set('layout', 'layout');
 
 //Middleware
+//URLEncoded is needed to parse form data
 app.use(express.urlencoded({ extended: true }));
+//static is needed to serve static files like CSS and JS
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Session Setup
 app.use(session({
+  //To be set in .env for production
   secret: process.env.SESSION_SECRET || 'devsecret',
   resave: false,
   saveUninitialized: false,
@@ -31,10 +34,10 @@ app.use((req, res, next) => {
   next();
 });
 
-//Routes
+//Routes, these are needed to direct requests to the correct controllers
 app.get('/', (req, res) => res.redirect('/login'));
 app.use('/', userRoutes);
 app.use('/students', studentRoutes);
 
 //Start Server
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

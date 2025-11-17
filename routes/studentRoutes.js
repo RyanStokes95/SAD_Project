@@ -1,13 +1,14 @@
-// routes/studentRoutes.js
 const express = require('express');
 const router = express.Router();
 const studentController = require('../controllers/studentController');
 
-// simple auth middleware
+// simple auth middleware, this function checks if the user is logged in and redirects to login if not
 function ensureAuth(req, res, next) {
   if (req.session && req.session.user) return next();
   res.redirect('/login');
 }
+
+//The routes here connect HTTP requests to the student controller functions
 
 router.get('/', ensureAuth, studentController.list);
 router.get('/add', ensureAuth, studentController.showCreate);
