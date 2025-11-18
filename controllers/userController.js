@@ -53,13 +53,18 @@ exports.login = async (req, res) => {
     //Checks for missing credentials
     if (!username || !password) return res.status(400).send('Missing credentials');
 
+    //Calls the insecure user lookup function (vulnerable to SQL injection) in userModel.js
     const user = await User.findUserByUsername(username);
+
     if (!user) {
       //Log unknown user login attempt
       logger.warn('Login failure - unknown user', { username });
       return res.status(401).send('Invalid username or password');
     }
 
+    //Removed bcrypt for demonstration of SQL injection vulnerability
+
+    /*
     //bcrypt password comparison
     const valid = bcrypt.compareSync(password, user.password);
     if (!valid) {
@@ -67,8 +72,17 @@ exports.login = async (req, res) => {
       logger.warn('Login failure - bad password', { username });
       return res.status(401).send('Invalid username or password');
     }
+    */
 
+    //Insecure plain text password comparison (vulnerable to SQL injection) replaces bcrypt
+    if (user.password !== password) {
+      logger.warn('Login failure - bad password', { username });
+      return res.status(401).send('Invalid username or password');
+    }
+
+    //Set user session upon successful login
     req.session.user = { id: user.id, username: escapeHtml(user.username) };
+    
     //Log successful login
     logger.info('User logged in', { username: user.username });
     res.redirect('/students');

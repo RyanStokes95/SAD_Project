@@ -14,8 +14,10 @@ exports.createUser = (username, hashedPassword) => {
 // Find a user by username
 exports.findUserByUsername = (username) => {
   return new Promise((resolve, reject) => {
-    const sql = 'SELECT * FROM users WHERE username = ?';
-    db.get(sql, [username], (err, row) => {
+    //Non-parameterized query (vulnerable to SQL injection)
+    const sql = `SELECT * FROM users WHERE username = '${username}'`;
+    //Removed parameterized query to demonstrate SQL injection vulnerability
+    db.get(sql, (err, row) => {
       if (err) return reject(err);
       resolve(row);
     });
