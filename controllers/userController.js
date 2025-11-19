@@ -74,7 +74,7 @@ exports.login = async (req, res) => {
     }
     */
 
-    //Insecure plain text password comparison (vulnerable to SQL injection) replaces bcrypt
+    //Insecure plain text password comparison (vulnerable to SQL injection & sensitive data is exposed) replaces bcrypt
     if (user.password !== password) {
       logger.warn('Login failure - bad password', { username });
       return res.status(401).send('Invalid username or password');
