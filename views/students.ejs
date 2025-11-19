@@ -3,6 +3,11 @@
   <a href="/students/add" class="btn btn-success">Add Student</a>
 </div>
 
+<!-- Added search form to demonstate reflected xss vulnerability -->
+<form action="/students/search" method="GET" class="mb-3">
+  <input type="text" name="q" class="form-control" placeholder="Search students...">
+</form>
+
 <table class="table table-striped">
   <thead><tr><th>ID</th><th>Name</th><th>Course</th><th>Actions</th></tr></thead>
   <tbody>

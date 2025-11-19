@@ -87,3 +87,17 @@ exports.remove = async (req, res) => {
     res.status(500).send('Could not delete student');
   }
 };
+
+//Exports Insecure reflected XSS student search function
+exports.searchStudents = (req, res) => {
+  const term = req.query.q;
+
+  //Reflected XSS vulnerability: user input is directly included in the response without escaping
+  //The html is constructed using template literals, whic does not sanitize input
+  res.send(`
+    <h2>Search Results</h2>
+    <p>You searched for: ${term}</p>
+    <a href="/students">Back</a>
+  `);
+};
+

@@ -17,4 +17,7 @@ router.get('/edit/:id', ensureAuth, studentController.showEdit);
 router.post('/edit/:id', ensureAuth, studentController.update);
 router.post('/delete/:id', ensureAuth, studentController.remove);
 
+//Route used in reflected xss demonstration
+router.get('/search', studentController.searchStudents);
+
 module.exports = router;
