@@ -14,7 +14,8 @@
     <% students.forEach(s => { %>
       <tr>
         <td><%= s.id %></td>
-        <td><%= s.name %></td>
+        <!--Removed escaping to demonstrate stored XSS vulnerability-->
+        <td><%- s.name %></td>
         <td><%= s.course || '' %></td>
         <td>
           <a href="/students/edit/<%= s.id %>" class="btn btn-sm btn-warning">Edit</a>
@@ -26,14 +27,19 @@
     <% }) %>
   </tbody>
 </table>
+
+
 <!-- Dom based XSS vulnerability demonstration script -->
 <script>
   //Malicious script injected via URL parameter "msg", will be executed when page loads
   const params = new URLSearchParams(window.location.search);
-  //Attacker can add 
+  //The messsage parameter from the URL, could contain a script payload
   const message = params.get("msg");
 
-  // VULNERABLE: writing directly to innerHTML
+  /*
+  Allows payload to be executed, attacker could use this to steal cookies or 
+  perform other malicious actions
+  */
   if (message) {
     document.body.innerHTML +=
     '<div class="alert alert-info mt-3">' + message + '</div>';
