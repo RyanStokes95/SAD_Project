@@ -1,5 +1,18 @@
 const { Builder, By, until } = require("selenium-webdriver");
 
+/*
+This script uses Selenium WebDriver to automate a login test for a web application. It performs the following steps:
+1. Opens a Chrome browser and navigates to the login page.
+2. Fills in the username and password fields with predefined credentials.
+3. Clicks the login button and waits for XSS alert.
+4. Waits for a redirect to the /students page to confirm a successful login.
+5. Closes XSS alert again
+6. Click the add student button
+7. Fills in the new student form and submits it.
+8. Verifies that the new student appears in the student list.
+9. Logs the result of the test (pass/fail) to the console.
+10. Closes the browser.
+*/
 
 async function userAddTest() {
   //Start Chrome browser
