@@ -10,8 +10,8 @@ const logFormat = printf(({ level, message, timestamp }) => {
 
 //Create the logger instance
 const logger = createLogger({
-  //log everything info and above
-  //Level info is 2: error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
+  //log everything info and above 0, 1, 2
+  //Level info is 2: error: 0, warn: 1, info: 2 (unused = http: 3, verbose: 4, debug: 5, silly: 6)
   level: 'info', 
   format: combine(timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), logFormat),
   transports: [
